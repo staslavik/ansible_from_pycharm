@@ -1,0 +1,60 @@
+---
+- name: MAXPATROLCONFIG
+  hosts: vm
+  tasks:
+    - name: Журналирование
+      block:
+        - name: Создание службы журнралирования
+          ansible.builtin.get_url:
+            url: http://10.248.133.46:8080/MaxPatrol/10-siem.conf
+            dest: /etc/rsyslog.d/
+
+        - name: Конфигурация rsyslog.conf
+          blockinfile:
+            path: /etc/rsyslog.conf
+            block: |
+              $IncludeConfig /etc/rsyslog.d/*.conf
+              $RepeatedMsgReduction off
+              $ActionQueueType LinkedList
+              $ActionQueueFileName
+              $ActionResumeRetryCount -1
+              $ActionQueueSaveOnShutdown on
+              $ActionQueueMaxDiskSpace 1024m
+              $ActionQueueTimeoutEnqueue 0
+              $imjournalRatelimitInterval 15
+              RateLimitBurst=20000
+        - name: Перезагрузка syslog
+          service:
+            name: rsyslog
+            state: restarted
+            enable: True
+
+
+    - name: Создание пользователя MaxPatrol
+      user:
+        name: max_patrol
+        password: "password"
+        groups: sudo
+        home: /home/max_patrol
+        mode: '0700'
+    - name: Скачать архив
+      ansible.builtin.get_url:
+        url: http://10.248.133.46:8080/MaxPatrol/bin.tar
+        dest: /home/max_patrol/
+    - name: Распаковать архив
+      unarchive:
+        src: /home/max_patrol/
+        dest: /home/max_patrol/
+
+
+    - name: Изменение файла sudoers
+      blockinfile:
+        path: /etc/sudoers
+        block: |
+          Cmnd_Alias MPROOTCMD = /usr/bin/at -l, /usr/bin/crontab * -l, /sbin/fdisk -l, /sbin/iptables-save, /bin/netstat, /bin/ss, /usr/sbin/dmidecode, /sbin/vgdisplay, /sbin/lvdisplay, /sbin/auditctl -[vl]
+          Cmnd_Alias MPFILECMD = /bin/cat, /usr/bin/find *, /bin/ls, /usr/bin/getfacl, /usr/bin/test
+          Cmnd_Alias MPEXCPTNSCMD = !/usr/bin/find *-exec*, !/usr/bin/find *-fprint*, !/usr/bin/find*-ok*, !/usr/bin/find *-delete*, !/usr/bin/find *-fls*, !/bin/ss *--diag*, !/bin/ss *-D*, !/usr/sbin/dmidecode *-dump*
+          max_patrol ALL = (ALL) NOPASSWD: MPROOTCMD
+          max_patrol = (ALL) NOPASSWD: MPFILECMD
+          max_patrol = (ALL) NOPASSWD: MPEXCPTNSCMD
+          Defaults env_reset

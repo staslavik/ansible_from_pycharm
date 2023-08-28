@@ -1,0 +1,6 @@
+---
+- name: All configs
+  hosts: cluster
+  roles:
+    - role: deploy
+      message: 'sd'
