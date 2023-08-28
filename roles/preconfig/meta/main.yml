@@ -1,4 +1,13 @@
-argument_spec:
-  main:
-    short_description: Настройка серверов для работы с Docker
-    author: staslav
+galaxy_info:
+  role_name: preconfig
+  description: настройка серверов для работы с Docker
+  author: staslav
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+dependencies:
+  - role: deploy
+
