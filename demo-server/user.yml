@@ -1,6 +1,6 @@
 ---
 - name: user
-  hosts: demo
+  hosts: inventory
   tasks:
     - name: Preconfig block
       block:

@@ -1,3 +1,0 @@
-[demo]
-server1 ansible_host=10.202.11.3 ansible_user=test ansible_port=22
-server1 ansible_host=10.202.11.4 ansible_user=test ansible_port=22
