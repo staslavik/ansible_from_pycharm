@@ -3,3 +3,4 @@
   hosts: cluster
   roles:
     - preconfig
+    - deploy

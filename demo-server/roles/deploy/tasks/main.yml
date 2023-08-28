@@ -1,6 +1,3 @@
 ---
-- name: All configs
-  hosts: cluster
-  roles:
-    - role: deploy
-      message: 'sd'
+- name: Demo
+  command: echo "DEMO"
