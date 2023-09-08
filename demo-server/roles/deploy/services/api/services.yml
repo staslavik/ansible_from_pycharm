@@ -1,24 +1,13 @@
 ---
-- name: "[{{ name }}] Конфигурация  секрет"
-  block:
-    - name: "[{{ name }}] Создаём секрет"
-      include: "../secret.yml"
-
-  rescue:
-    - name: "[{{ name }}] удаляем сервис"
-      community.docker.docker_swarm_service:
-        name: "{{ name }}"
-        state: absent
-
-    - name: "[{{ name }}] Создаём секрет"
-      include: "../secret.yml"
+- name: "[{{ name }}] Конфигурация  секрета"
+  include: "../secret.yml"
 
 - name: "[{{ name }}] Выкладываем сервис"
   block:
     - name: "[{{ name }}] Выкладываем сервис"
       community.docker.docker_swarm_service:
         name: "{{ name }}"
-        image: localhost:5000/api:latest
+        image: "localhost:5000/{{ name }}:latest"
         state: present
         networks:
           - name: "{{ networkName }}"
