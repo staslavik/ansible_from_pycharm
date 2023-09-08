@@ -4,7 +4,7 @@
     name: "{{ name }}.env"
     data: "{{ lookup('file', '.env') | b64encode }}"
     labels:
-      secret: "{{ lookup('file', '.env' | hash('sha1') }}"
+      secret: "{{ lookup('file', '.env') | hash('sha1') }}"
     data_is_b64: true
     state: present
 
