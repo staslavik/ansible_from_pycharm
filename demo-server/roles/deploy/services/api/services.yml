@@ -7,8 +7,9 @@
       secret: "{{ lookup('file', '.env' | hash('sha1') }}"
     data_is_b64: true
     state: present
+
 - name: "[{{ name }}] Выкладываем сервис"
-  community.docker.docker_swarm_services:
+  community.docker.docker_swarm_service:
     name: "{{ name }}"
     image: localhost:5000/api:latest
     state: present

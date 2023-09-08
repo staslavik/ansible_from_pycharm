@@ -5,7 +5,7 @@
     driver: overlay
 
 - name: Выкладка сервисов
-  include: "../services/{{ item }}/service.yml"
+  include: "../services/{{ item }}/services.yml"
   vars:
     - name: "{{ item }}"
   loop: "{{ services }}"
