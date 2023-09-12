@@ -17,5 +17,5 @@
             published_port: 3002
             target_port: 3000
         secrets:
-          - secret_name: "{{ name }}.env"
-            filename: "/opt/app/.env"
+          - secret_name: "{{ name }}.env.j2"
+            filename: "/opt/app/.env.j2"
