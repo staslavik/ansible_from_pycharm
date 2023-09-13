@@ -9,6 +9,7 @@
         name: "{{ name }}"
         image: "localhost:5000/{{ name }}:latest"
         state: present
+        force_update: true
         networks:
           - name: "{{ networkName }}"
         publish:
