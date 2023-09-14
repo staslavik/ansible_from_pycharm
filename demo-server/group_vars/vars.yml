@@ -18,8 +18,8 @@ services:
 #    version: latest
 #  - name: converter
 #    version: latest
-#  - name: rmq
-#    version: 3-management
+  - name: rmq
+    version: 3-management
 #  - name: nginx
 #    version: latest
 #
