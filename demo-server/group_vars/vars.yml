@@ -9,11 +9,11 @@ rmq_defaults:
   - name: AMQP_HOSTNAME
     value: rmq
 
-#registry_name: "localhost:5000/"
-#
-#services:
-#  - name: api
-#    version: latest
+registry_name: "localhost:5000/"
+
+services:
+  - name: api
+    version: latest
 #  - name: app
 #    version: latest
 #  - name: converter
@@ -23,7 +23,7 @@ rmq_defaults:
 #  - name: nginx
 #    version: latest
 #
-#non_build_services:
+non_build_services:
 #  - name: rmq
 #    version: 3-management
 #  - name: nginx
