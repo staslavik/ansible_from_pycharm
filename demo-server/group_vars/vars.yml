@@ -19,13 +19,13 @@ services:
 #  - name: converter
 #    version: latest
   - name: rmq
-    version: 3-management
+    version: latest
 #  - name: nginx
 #    version: latest
 #
 non_build_services:
   - name: rmq
-    version: 3-management
+    version: latest
 #  - name: nginx
 #    version: latest
 #
