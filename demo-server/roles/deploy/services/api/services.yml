@@ -11,7 +11,7 @@
         state: present
         force_update: true
         networks:
-          - name: "{{ networkName }}"
+          - name: "{{ network_name }}"
         publish:
           - mode: ingress
             protocol: tcp
